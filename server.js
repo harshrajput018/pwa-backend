@@ -18,6 +18,8 @@ app.use('/friends', friendsEndpoint);
 app.use('/getchats', getchats);
 app.use('/allusers', adduser);
 
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.json('Hello');
 });
