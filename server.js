@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const http = require('http');
-const serverPort = 9000; // Change this to your desired port
+const serverPort = process.env.PORT || 9000 ; // Change this to your desired port
 const server = http.createServer(app); // Create an HTTP server
 
 // Import your API endpoints
