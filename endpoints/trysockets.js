@@ -19,7 +19,8 @@ function initializeSocket(server) {
     cors: {
       origin: "*",
       methods: ["GET", "POST"]
-    }
+    },
+    transports: ["websocket"],
   });
 
   const mapsidtouid = new Map();
