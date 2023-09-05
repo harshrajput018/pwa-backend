@@ -17,7 +17,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 function initializeSocket(server) {
   const io = socketIo(server, {
     cors: {
-      origin: "*",
+      origin: "https://react-chatapp-rose.vercel.app/",
       methods: ["GET", "POST"]
     },
     transports: ["websocket"],
