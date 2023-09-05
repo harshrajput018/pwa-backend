@@ -6,7 +6,7 @@ const User = require('../models/user')
 
 const friendsRouter = express.Router();
 
-mongoose.connect('mongodb+srv://harshrajput18:Harsh1827@cluster0.efkiy6x.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
