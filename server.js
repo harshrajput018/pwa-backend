@@ -4,6 +4,9 @@ const app = express();
 const http = require('http');
 const serverPort = process.env.PORT || 9000 ; // Change this to your desired port
 const server = http.createServer(app); // Create an HTTP server
+require('dotenv').config();
+
+console.log(process.env.MONGO_URI);
 
 // Import your API endpoints
 const friendsEndpoint = require('./endpoints/friends');

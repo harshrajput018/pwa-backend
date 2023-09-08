@@ -64,7 +64,7 @@ friendsRouter.get('/getrequest',async(req,res)=>{
 
     const from= jwt.verify(token, "THISISMYSECRETKEY");
 
-    let allRequest = await Friend.find({$or :[{user2:from.userid, request:true},{user1:from.userid, request:true}]});
+    let allRequest = await Friend.find({$or :[{user2:from.userid, request:true}]});
 
     console.log('allrequest',allRequest)
       
@@ -80,16 +80,14 @@ friendsRouter.get('/getrequest',async(req,res)=>{
     if(allRequest.length>0){
         const users=[];
         await Promise.all(allRequest.map(async (elem) => {
-            if(elem.request===true){
             
-            console.log(elem.user1);
                 
            
-            const user = await User.findOne({$or:[{ _id: elem.user1} , {_id: elem.user2}]});
-            if(from.userid!=user._id)
+            const user = await User.findOne({$or:[{ _id: elem.user1}]});
+            
             users.push(user);
             
-            }
+            
         }));
 
         res.json({users});
