@@ -101,6 +101,37 @@ friendsRouter.get('/getrequest',async(req,res)=>{
     
 })
 
+friendsRouter.get('/sentrequest', async(req,res)=>{
+
+    const {token} = req.headers;
+
+    const from= jwt.verify(token, "THISISMYSECRETKEY");
+
+    let allRequest = await Friend.find({$or :[{user1:from.userid, request:true}]});
+
+    if(allRequest.length>0){
+        const users=[];
+        await Promise.all(allRequest.map(async (elem) => {
+            
+                
+           
+            const user = await User.findOne({$or:[{ _id: elem.user2}]});
+            
+            users.push(user);
+            
+            
+        }));
+
+        res.json({users});
+    }
+
+    else
+    res.json({users:[]});
+
+
+
+})
+
 friendsRouter.get('/getfriends',async(req,res)=>{
 
     const {token} = req.headers;
@@ -178,7 +209,13 @@ friendsRouter.get('/reject',async(req,res)=>{
 
     const from= jwt.verify(token, "THISISMYSECRETKEY");
 
-    const allRequest = await Friend.deleteOne({user2:from.userid,user1:req.headers.id, request:true});
+    console.log('REJECT',from.userid, req.headers.id)
+
+    if(req.headers.friend==='true')
+   {console.log('hereeeeeeeee') 
+    const allRequest2 = await Friend.deleteOne({$or:[{user2:from.userid,user1:req.headers.id, areFriends:true},{user1:from.userid,user2:req.headers.id, areFriends:true}]});}
+   else{
+    const allRequest = await Friend.deleteOne({user1:from.userid,user2:req.headers.id, request:true});}
 
     res.json({status:'successful'})
 
