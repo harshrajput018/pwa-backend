@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors= require('cors')
 const jwt= require('jsonwebtoken')
 const bcrypt= require('bcrypt')
@@ -11,26 +10,13 @@ Router.use(express.json());
 Router.use(cors());
 
 
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-// Define User Schema
-
-
 // Register a new user
 Router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   const hashedPassword = await bcrypt.hash(password,10);
 
-  console.log(req.body);
+  
 
   try {
     const prev= await User.find({username: username});
@@ -78,6 +64,8 @@ Router.post('/login',async(req,res)=>{
 
 Router.get('/allusers',async(req,res)=>{
     const allusers = await User.find();
+
+    console.log(allusers)
 
     res.json({allusers});
 })

@@ -20,9 +20,9 @@ Router.get('/',async(req,res)=>{
     const user= jwt.verify(req.headers.from,'THISISMYSECRETKEY')
 
 
-    const msg= await Msg.find({$or:[{from:user.userid,to: new mongoose.Types.ObjectId(req.headers.to)},{from: new mongoose.Types.ObjectId(req.headers.to),to:user.userid}]});
+    
 
-    // const msg= await Msg.find({type:'public'});
+    const msg= await Msg.find({type:'public'});
 
     res.json({msgs: msg})
     

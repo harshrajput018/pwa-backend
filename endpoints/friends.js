@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose')
+
 const cors= require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
@@ -8,14 +8,8 @@ const Friend = require('../models/friend')
 
 const friendsRouter = express.Router();
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
-const db=mongoose.connection;
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 
